@@ -5,14 +5,12 @@ import java.time.LocalDateTime;
 public class CambioEstadoDocumentacion {
     private LocalDateTime fechaHoraFin;
     private LocalDateTime fechaHoraInicio;
-    private Empleado empleado;
-    private Estado estado;
+    private Empleado responsableCE;
 
-    public CambioEstadoDocumentacion(LocalDateTime fechaHoraFin, Estado estado, Empleado empleado, LocalDateTime fechaHoraInicio) {
+    public CambioEstadoDocumentacion(LocalDateTime fechaHoraFin, LocalDateTime fechaHoraInicio, Empleado responsableCE) {
         this.fechaHoraFin = fechaHoraFin;
-        this.estado = estado;
-        this.empleado = empleado;
         this.fechaHoraInicio = fechaHoraInicio;
+        this.responsableCE = responsableCE;
     }
 
     public LocalDateTime getFechaHoraFin() {
@@ -31,20 +29,12 @@ public class CambioEstadoDocumentacion {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public Empleado getEmpleado() {
-        return empleado;
+    public Empleado getResponsableCE() {
+        return responsableCE;
     }
 
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setResponsableCE(Empleado responsableCE) {
+        this.responsableCE = responsableCE;
     }
     // sosActual()
 }

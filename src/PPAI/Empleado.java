@@ -5,14 +5,14 @@ public class Empleado {
     private String email;
     private String apellido;
     private Rol rol;
-    private ComisionMedica comisionMedica;
+    private ComisionMedica asignadoA;
 
-    public Empleado(ComisionMedica comisionMedica, Rol rol, String apellido, String nombre, String email) {
-        this.comisionMedica = comisionMedica;
-        this.rol = rol;
-        this.apellido = apellido;
+    public Empleado(String nombre, String apellido, String email, Rol rol, ComisionMedica asignadoA) {
         this.nombre = nombre;
+        this.apellido = apellido;
         this.email = email;
+        this.rol = rol;
+        this.asignadoA = asignadoA;
     }
 
     public String getNombre() {
@@ -23,20 +23,12 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public ComisionMedica getComisionMedica() {
-        return comisionMedica;
+    public String getEmail() {
+        return email;
     }
 
-    public void setComisionMedica(ComisionMedica comisionMedica) {
-        this.comisionMedica = comisionMedica;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getApellido() {
@@ -47,12 +39,20 @@ public class Empleado {
         this.apellido = apellido;
     }
 
-    public String getEmail() {
-        return email;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public ComisionMedica getAsignadoA() {
+        return asignadoA;
+    }
+
+    public void setAsignadoA(ComisionMedica asignadoA) {
+        this.asignadoA = asignadoA;
     }
     // public mostrarCM()
     // public sosGCM()
