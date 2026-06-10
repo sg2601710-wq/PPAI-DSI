@@ -6,13 +6,15 @@ public class Empleado {
     private String apellido;
     private Rol rol;
     private ComisionMedica asignadoA;
+    private Usuario usuario;
 
-    public Empleado(String nombre, String apellido, String email, Rol rol, ComisionMedica asignadoA) {
+    public Empleado(String nombre, String email, String apellido, Rol rol, ComisionMedica asignadoA, Usuario usuario) {
         this.nombre = nombre;
-        this.apellido = apellido;
         this.email = email;
+        this.apellido = apellido;
         this.rol = rol;
         this.asignadoA = asignadoA;
+        this.usuario = usuario;
     }
 
     public String getNombre() {
@@ -54,7 +56,17 @@ public class Empleado {
     public void setAsignadoA(ComisionMedica asignadoA) {
         this.asignadoA = asignadoA;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
     // public mostrarCM()
     // public sosGCM()
     // public esTuCM()
+    // estaLogueado()
+    // esTuUsuario()
 }

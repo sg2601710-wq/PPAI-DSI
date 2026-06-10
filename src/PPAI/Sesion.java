@@ -4,10 +4,16 @@ import java.time.LocalDateTime;
 public class Sesion {
     private LocalDateTime fechaHoraInicio;
     private LocalDateTime fechaHoraFin;
-
+    private Usuario usuario;
     public Sesion(){
 
     }
+    public Sesion(LocalDateTime fechaHoraInicio, Usuario usuario, LocalDateTime fechaHoraFin) {
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.usuario = usuario;
+        this.fechaHoraFin = fechaHoraFin;
+    }
+
     public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
@@ -24,8 +30,12 @@ public class Sesion {
         this.fechaHoraFin = fechaHoraFin;
     }
 
-    public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin) {
-        this.fechaHoraInicio = fechaHoraInicio;
-        this.fechaHoraFin = fechaHoraFin;
+    public Usuario getUsuario() {
+        return usuario;
     }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    // getUsuarioLogueado()
 }
