@@ -13,12 +13,13 @@ public class Remito {
    private ComisionMedica destino;
    // Para poder hacer la composición:
    private List<DetalleRemito> detalleRemito = new ArrayList<>();
-   public void crearDetalleRemito(String areaCMCDestino) {
+   public void crearDetalleRemito() {
        // Suponiendo que el constructor de DetalleRemito recibe los datos necesarios
        DetalleRemito nuevoDetalleRemito = new DetalleRemito() ;
        this.detalleRemito.add(nuevoDetalleRemito);
    }
-
+    public Remito() {
+    }
    public LocalDate getFecha() {
        return fecha;
    }
