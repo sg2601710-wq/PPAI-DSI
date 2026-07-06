@@ -1,0 +1,30 @@
+# IDEs
+.idea/
+**/.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and local config
+*.log
+.env
+.env.*
+!.env.example
+*.local
+
+# Node / frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+
+# Java / Maven
+target/
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
