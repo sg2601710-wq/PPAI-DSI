@@ -1,11 +1,21 @@
 package com.G1_DSI.PPAI.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="roles")
 public class Rol {
+
+    @Id
+    @Column(nullable = false, unique = true)
     private String nombre;
+
+    @Column
     private String descripcion;
 
-    public Rol(){
-    }
     public String getNombre() {
         return nombre;
     }
@@ -22,9 +32,7 @@ public class Rol {
         this.descripcion = descripcion;
     }
 
-    public Rol(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    public Boolean esGCM() {
+        return nombre.toLowerCase().equals("gcm");
     }
-    // public esGCM()
 }

@@ -1,20 +1,28 @@
 package com.G1_DSI.PPAI.model;
 
-public class Empleado {
-    private String nombre;
-    private String email;
-    private String apellido;
-    private Rol rol;
-    private ComisionMedica asignadoA;
-    private Usuario usuario;
+import jakarta.persistence.*;
 
-    public Empleado(String nombre, String email, String apellido, Rol rol, ComisionMedica asignadoA, Usuario usuario) {
+@Entity
+@Table(name="empleados")
+@IdClass(EmpleadoId.class)
+public class Empleado {
+
+    @Id
+    @Column(nullable = false, length = 100)
+    private String nombre;
+
+    @Id
+    @Column(nullable = false, length = 100)
+    private String apellido;
+
+    @Column
+    private String email;
+
+    public Empleado() {}
+
+    public Empleado(String nombre, String apellido) {
         this.nombre = nombre;
-        this.email = email;
         this.apellido = apellido;
-        this.rol = rol;
-        this.asignadoA = asignadoA;
-        this.usuario = usuario;
     }
 
     public String getNombre() {
@@ -25,14 +33,6 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getApellido() {
         return apellido;
     }
@@ -41,32 +41,13 @@ public class Empleado {
         this.apellido = apellido;
     }
 
-    public Rol getRol() {
-        return rol;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public ComisionMedica getAsignadoA() {
-        return asignadoA;
-    }
 
-    public void setAsignadoA(ComisionMedica asignadoA) {
-        this.asignadoA = asignadoA;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    // public mostrarCM()
-    // public sosGCM()
-    // public esTuCM()
-    // estaLogueado()
-    // esTuUsuario()
 }
