@@ -18,11 +18,27 @@ public class Empleado {
     @Column
     private String email;
 
+    @OneToOne
+    @JoinColumn(name="idUsuario", nullable = false, insertable = false, updatable = false)
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name="idRol", nullable = false, insertable = false, updatable = false)
+    private Rol rol;
+
+    @ManyToOne
+    @JoinColumn(name="codigoCM", nullable = false, insertable = false, updatable = false)
+    private ComisionMedica CM;
+
     public Empleado() {}
 
-    public Empleado(String nombre, String apellido) {
+    public Empleado(String nombre, String apellido, String email,  Usuario usuario, Rol rol, ComisionMedica CM) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.email = email;
+        this.usuario = usuario;
+        this.rol = rol;
+        this.CM = CM;
     }
 
     public String getNombre() {
@@ -49,5 +65,39 @@ public class Empleado {
         this.email = email;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public ComisionMedica getCM() {
+        return CM;
+    }
+
+    public void setCM(ComisionMedica CM) {
+        this.CM = CM;
+    }
+
+    public Boolean esTuCM(ComisionMedica ComisionMedica) {
+        return CM == ComisionMedica;
+    }
+
+    public Boolean esTuUsuario(Usuario usuario) {
+        return usuario == this.usuario;
+    }
+
+    public Boolean sosGCM(Rol rol) {
+        return rol.esGCM();
+    }
 }
