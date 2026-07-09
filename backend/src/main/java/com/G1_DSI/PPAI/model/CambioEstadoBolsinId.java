@@ -1,6 +1,7 @@
 package com.G1_DSI.PPAI.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CambioEstadoBolsinId implements Serializable {
@@ -11,12 +12,15 @@ public class CambioEstadoBolsinId implements Serializable {
 
     private  String ambitoEstado;
 
+    private LocalDateTime fechaHoraInicio;
+
     public CambioEstadoBolsinId() {}
 
-    public CambioEstadoBolsinId(Integer numeroBolsin, String nombreEstado, String ambitoEstado) {
+    public CambioEstadoBolsinId(Integer numeroBolsin, String nombreEstado, String ambitoEstado, LocalDateTime fechaHoraInicio) {
         this.numeroBolsin = numeroBolsin;
         this.nombreEstado = nombreEstado;
         this.ambitoEstado = ambitoEstado;
+        this.fechaHoraInicio = fechaHoraInicio;
     }
 
     public Integer getNumeroBolsin() {
@@ -43,6 +47,14 @@ public class CambioEstadoBolsinId implements Serializable {
         this.ambitoEstado = ambitoEstado;
     }
 
+    public LocalDateTime getFechaHoraInicio() {
+        return fechaHoraInicio;
+    }
+
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        this.fechaHoraInicio = fechaHoraInicio;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,12 +62,13 @@ public class CambioEstadoBolsinId implements Serializable {
         CambioEstadoBolsinId that = (CambioEstadoBolsinId) o;
         return Objects.equals(numeroBolsin, that.numeroBolsin) &&
                 Objects.equals(nombreEstado, that.nombreEstado) &&
-                Objects.equals(ambitoEstado, that.ambitoEstado);
+                Objects.equals(ambitoEstado, that.ambitoEstado) &&
+                Objects.equals(fechaHoraInicio, that.fechaHoraInicio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numeroBolsin, nombreEstado, ambitoEstado);
+        return Objects.hash(numeroBolsin, nombreEstado, ambitoEstado, fechaHoraInicio);
     }
 
 }

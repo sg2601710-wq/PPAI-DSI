@@ -2,6 +2,8 @@ package com.G1_DSI.PPAI.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name="empleados")
 @IdClass(EmpleadoId.class)
@@ -19,7 +21,7 @@ public class Empleado {
     private String email;
 
     @OneToOne
-    @JoinColumn(name="idUsuario", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name="idUsuario", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
@@ -89,8 +91,10 @@ public class Empleado {
         this.CM = CM;
     }
 
-    public Boolean esTuCM(ComisionMedica ComisionMedica) {
-        return CM == ComisionMedica;
+    public Boolean esTuCM(ComisionMedica comisionMedica) {
+        return CM != null
+                && comisionMedica != null
+                && Objects.equals(CM.getCodigo(), comisionMedica.getCodigo());
     }
 
     public Boolean esTuUsuario(Usuario usuario) {
@@ -98,6 +102,6 @@ public class Empleado {
     }
 
     public Boolean sosGCM(Rol rol) {
-        return rol.esGCM();
+        return rol != null && rol.esGCM();
     }
 }

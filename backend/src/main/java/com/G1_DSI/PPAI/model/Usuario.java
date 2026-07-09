@@ -23,6 +23,7 @@ public class Usuario {
     public Usuario(Integer id, String nombre, String password) {
         this.id = id;
         this.nombre = nombre;
+        this.password = password;
     }
 
     public Integer getId() {

@@ -3,6 +3,7 @@ package com.G1_DSI.PPAI.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="sesiones")
@@ -17,14 +18,14 @@ public class Sesion {
     private Usuario usuario;
 
     @Column(nullable = false)
-    private LocalDate fechaHoraInicio;
+    private LocalDateTime fechaHoraInicio;
 
     @Column
-    private LocalDate fechaHoraFin;
+    private LocalDateTime fechaHoraFin;
 
     public Sesion() {}
 
-    public Sesion(Integer idSesion, LocalDate fechaHoraInicio, LocalDate fechaHoraFin,  Usuario usuario) {
+    public Sesion(Integer idSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin,  Usuario usuario) {
         this.idSesion = idSesion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
@@ -47,19 +48,19 @@ public class Sesion {
         this.usuario = usuario;
     }
 
-    public LocalDate getFechaHoraInicio() {
+    public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }
 
-    public void setFechaHoraInicio(LocalDate fechaHoraInicio) {
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public LocalDate getFechaHoraFin() {
+    public LocalDateTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public void setFechaHoraFin(LocalDate fechaHoraFin) {
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
         this.fechaHoraFin = fechaHoraFin;
     }
 

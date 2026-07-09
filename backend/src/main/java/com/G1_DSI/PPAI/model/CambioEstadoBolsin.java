@@ -21,6 +21,10 @@ public class CambioEstadoBolsin {
     @Column(nullable = false, length = 50)
     private String ambitoEstado;
 
+    @Id
+    @Column(nullable = false)
+    private LocalDateTime fechaHoraInicio;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "numeroBolsin",
@@ -67,9 +71,6 @@ public class CambioEstadoBolsin {
 
     @Column
     private LocalDateTime fechaHoraFin;
-
-    @Column(nullable = false)
-    private LocalDateTime fechaHoraInicio;
 
     public CambioEstadoBolsin() {}
 
