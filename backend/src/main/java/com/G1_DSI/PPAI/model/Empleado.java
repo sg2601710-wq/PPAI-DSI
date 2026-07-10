@@ -98,7 +98,9 @@ public class Empleado {
     }
 
     public Boolean esTuUsuario(Usuario usuario) {
-        return usuario == this.usuario;
+        return usuario != null
+                && this.usuario != null
+                && Objects.equals(this.usuario.getId(), usuario.getId());
     }
 
     public Boolean sosGCM(Rol rol) {

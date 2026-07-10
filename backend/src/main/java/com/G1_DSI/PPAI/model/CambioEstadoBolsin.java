@@ -25,15 +25,6 @@ public class CambioEstadoBolsin {
     @Column(nullable = false)
     private LocalDateTime fechaHoraInicio;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "numeroBolsin",
-            referencedColumnName = "numeroBolsin",
-            nullable = false,
-            insertable = false,
-            updatable = false
-    )
-    private Bolsin bolsin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
@@ -78,7 +69,6 @@ public class CambioEstadoBolsin {
             Integer numeroBolsin,
             String nombreEstado,
             String ambitoEstado,
-            Bolsin bolsin,
             Estado estado,
             Empleado responsableCE,
             LocalDateTime fechaHoraFin,
@@ -87,7 +77,6 @@ public class CambioEstadoBolsin {
         this.numeroBolsin = numeroBolsin;
         this.nombreEstado = nombreEstado;
         this.ambitoEstado = ambitoEstado;
-        this.bolsin = bolsin;
         this.estado = estado;
         this.responsableCE = responsableCE;
         this.fechaHoraFin = fechaHoraFin;
@@ -118,13 +107,6 @@ public class CambioEstadoBolsin {
         this.ambitoEstado = ambitoEstado;
     }
 
-    public Bolsin getBolsin() {
-        return bolsin;
-    }
-
-    public void setBolsin(Bolsin bolsin) {
-        this.bolsin = bolsin;
-    }
 
     public Estado getEstado() {
         return estado;
