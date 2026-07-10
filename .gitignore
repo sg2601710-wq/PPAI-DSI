@@ -1,4 +1,6 @@
 # IDEs
+.idea/
+**/.idea/
 .vscode/
 *.iml
 *.iws
