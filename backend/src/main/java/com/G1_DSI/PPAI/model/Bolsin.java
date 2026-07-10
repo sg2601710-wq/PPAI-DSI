@@ -25,6 +25,8 @@ public class Bolsin {
     @JoinColumn(name= "cmDestino", referencedColumnName = "codigo", nullable = false)
     private ComisionMedica cmDestino;
 
+    // De esta forma tanto bolsines como cambio estado bolsines se conocen de forma mútua, habría que ver
+    // si no es mejor hacer que sólo los bolsines conozcan su cambio de estado
     @OneToMany(mappedBy = "bolsin", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CambioEstadoBolsin> cambioEstadoBolsin = new ArrayList<>();
 
