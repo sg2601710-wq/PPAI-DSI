@@ -2,10 +2,11 @@ package com.G1_DSI.PPAI.service;
 
 import com.G1_DSI.PPAI.dto.ComisionMedicaResponse;
 import com.G1_DSI.PPAI.dto.ConsultarUbicacionBolsinResponse;
-import com.G1_DSI.PPAI.model.ComisionMedica;
-import com.G1_DSI.PPAI.model.Empleado;
-import com.G1_DSI.PPAI.model.Sesion;
-import com.G1_DSI.PPAI.model.Usuario;
+import com.G1_DSI.PPAI.dto.LocalizacionBolsinResponse;
+import com.G1_DSI.PPAI.dto.UbicacionBolsinRequest;
+import com.G1_DSI.PPAI.dto.UbicacionBolsinResponse;
+import com.G1_DSI.PPAI.model.*;
+import com.G1_DSI.PPAI.repository.IBolsinRepository;
 import com.G1_DSI.PPAI.repository.IEmpleadoRepository;
 import com.G1_DSI.PPAI.repository.ISesionRepository;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,6 +21,8 @@ public class ControladorConsultarSeguimientoBolsin {
 
     private final ISesionRepository sesionRepository;
     private final IEmpleadoRepository empleadoRepository;
+    private final IBolsinRepository bolsinRepository;
+    private final InterfazGPSTracker interfazGPSTracker;
 
     private List<Sesion> sesiones;
     private List<Empleado> empleados;
@@ -27,16 +30,21 @@ public class ControladorConsultarSeguimientoBolsin {
     private Usuario usuarioLogueado;
     private Empleado empleadoLogueado;
     private ComisionMedica comisionMedicaUsuarioLogueado;
-    private Integer codigoComisionMedicaUsuarioLogueado;
+    private List<Bolsin> bolsines;
 
     public ControladorConsultarSeguimientoBolsin(
             ISesionRepository sesionRepository,
-            IEmpleadoRepository empleadoRepository
+            IEmpleadoRepository empleadoRepository,
+            IBolsinRepository bolsinRepository,
+            InterfazGPSTracker interfazGPSTracker
     ) {
         this.sesionRepository = sesionRepository;
         this.empleadoRepository = empleadoRepository;
+        this.bolsinRepository = bolsinRepository;
+        this.interfazGPSTracker = interfazGPSTracker;
         this.sesiones = new ArrayList<>();
         this.empleados = new ArrayList<>();
+        this.bolsines = new ArrayList<>();
     }
 
     @EventListener(ContextRefreshedEvent.class)
@@ -47,6 +55,7 @@ public class ControladorConsultarSeguimientoBolsin {
     private void cargarDatos() {
         this.sesiones = sesionRepository.findAll();
         this.empleados = empleadoRepository.findAll();
+        this.bolsines = bolsinRepository.findAll();
     }
 
     public ConsultarUbicacionBolsinResponse consultarUbicacionBolsin() {
@@ -56,7 +65,13 @@ public class ControladorConsultarSeguimientoBolsin {
             return null;
         }
 
-        return new ConsultarUbicacionBolsinResponse(toComisionMedicaResponse(comisionMedica));
+        List<Bolsin> bolsinesEnEstadoEnviado = buscarBolsinesEnviados();
+        List<UbicacionBolsinResponse> ubicacionesBolsines = obtenerDatosLocalizacionBolsines(bolsinesEnEstadoEnviado);
+
+        return new ConsultarUbicacionBolsinResponse(
+                toComisionMedicaResponse(comisionMedica),
+                ubicacionesBolsines
+        );
     }
 
     private ComisionMedica buscarCMUsuarioLogueado() {
@@ -84,7 +99,6 @@ public class ControladorConsultarSeguimientoBolsin {
         }
 
         this.comisionMedicaUsuarioLogueado = empleadoLogueado.getCM();
-        this.codigoComisionMedicaUsuarioLogueado = comisionMedicaUsuarioLogueado.getCodigo();
         return comisionMedicaUsuarioLogueado;
     }
 
@@ -105,4 +119,57 @@ public class ControladorConsultarSeguimientoBolsin {
                 comisionMedica.getEmail()
         );
     }
+
+    private List<Bolsin> buscarBolsinesEnviados() {
+
+        List<Bolsin> bolsinesEnEstadoEnviado = new ArrayList<>();
+
+        for (Bolsin bolsin : bolsines) {
+            if (bolsin.esTuCMOrigen(comisionMedicaUsuarioLogueado) && bolsin.sosEnviado()) {
+                bolsinesEnEstadoEnviado.add(bolsin);
+            }
+        }
+
+        return bolsinesEnEstadoEnviado;
+    }
+
+    private List<UbicacionBolsinResponse> obtenerDatosLocalizacionBolsines(List<Bolsin> bolsinesEnEstadoEnviado) {
+        List<UbicacionBolsinRequest> solicitudes = new ArrayList<>();
+
+        for (Bolsin bolsin : bolsinesEnEstadoEnviado) {
+            solicitudes.add(new UbicacionBolsinRequest(
+                    bolsin.getNumeroBolsin(),
+                    bolsin.getCmOrigen().getCodigo()
+            ));
+        }
+
+        List<LocalizacionBolsinResponse> localizaciones = interfazGPSTracker.obtenerUbicacionBolsines(solicitudes);
+        List<UbicacionBolsinResponse> ubicacionesBolsines = new ArrayList<>();
+
+        for (LocalizacionBolsinResponse localizacion : localizaciones) {
+            Bolsin bolsin = null;
+
+            for (Bolsin bolsinEnviado : bolsinesEnEstadoEnviado) {
+                if (bolsinEnviado.getNumeroBolsin().equals(localizacion.getNumeroBolsin())) {
+                    bolsin = bolsinEnviado;
+                    break;
+                }
+            }
+
+            if (bolsin != null) {
+                ubicacionesBolsines.add(new UbicacionBolsinResponse(
+                        localizacion.getNumeroBolsin(),
+                        bolsin.getNumeroPrecinto(),
+                        bolsin.getCmDestino().getCodigo(),
+                        bolsin.getCmDestino().getNombre(),
+                        localizacion.getLatitud(),
+                        localizacion.getLongitud(),
+                        localizacion.getFechaHoraUltimaActualizacion()
+                ));
+            }
+        }
+
+        return ubicacionesBolsines;
+    }
+
 }

@@ -84,6 +84,7 @@ public class Empleado {
     }
 
     public ComisionMedica getCM() {
+        // Hay que ver si no hacemos que solamente retorne el código, o dejamos que tenga el objeto completo
         return CM;
     }
 

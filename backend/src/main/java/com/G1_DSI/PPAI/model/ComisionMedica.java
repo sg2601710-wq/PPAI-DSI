@@ -11,7 +11,7 @@ public class ComisionMedica {
 
     @Id
     @Column(nullable = false, unique = true)
-    private Integer codigo;
+    private String codigo;
 
     @Column
     private String direccion;
@@ -27,7 +27,7 @@ public class ComisionMedica {
 
     public ComisionMedica() {}
 
-    public ComisionMedica(Integer codigo, String direccion, String email, String nombre, String telefono) {
+    public ComisionMedica(String codigo, String direccion, String email, String nombre, String telefono) {
         this.codigo = codigo;
         this.direccion = direccion;
         this.email = email;
@@ -35,11 +35,11 @@ public class ComisionMedica {
         this.telefono = telefono;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

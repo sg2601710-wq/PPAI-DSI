@@ -2,14 +2,14 @@ package com.G1_DSI.PPAI.dto;
 
 public class ComisionMedicaResponse {
 
-    private Integer codigo;
+    private String codigo;
     private String nombre;
     private String direccion;
     private String telefono;
     private String email;
 
     public ComisionMedicaResponse(
-            Integer codigo,
+            String codigo,
             String nombre,
             String direccion,
             String telefono,
@@ -22,7 +22,7 @@ public class ComisionMedicaResponse {
         this.email = email;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 

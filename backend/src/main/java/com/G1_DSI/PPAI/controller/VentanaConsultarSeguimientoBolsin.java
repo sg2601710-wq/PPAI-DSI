@@ -20,6 +20,8 @@ public class VentanaConsultarSeguimientoBolsin {
         this.controladorConsultarSeguimientoBolsin = controladorConsultarSeguimientoBolsin;
     }
 
+    // Hay que fijarnos si no queremos cambiar el nombre del endpoint para respetar las convenciones
+    // de los nombres de los endpoints, o sea, poner algo como /bolsines
     @PostMapping("/consultar-ubicacion")
     public ResponseEntity<ConsultarUbicacionBolsinResponse> opcionConsultarUbicacionBolsin() {
         ConsultarUbicacionBolsinResponse response = mostrarCMUsuarioLogueado(habilitarVentana());
