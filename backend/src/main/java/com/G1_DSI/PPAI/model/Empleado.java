@@ -1,38 +1,45 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
-
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name="empleados")
-@IdClass(EmpleadoId.class)
+@Table(name = "empleados")
 public class Empleado {
 
-    @Id
-    @Column(nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Id
-    @Column(nullable = false, length = 100)
+    @Column(name = "apellido", nullable = false, length = 100)
     private String apellido;
 
-    @Column
+    // la PK de empleado, puede ser el email? o deberiamos hacerla compuesta con nombre,
+    // apellido y email
+    @Id
+    @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
-    @OneToOne
-    @JoinColumn(name="idUsuario", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "nombre_usuario", referencedColumnName = "nombre", nullable= false)
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name="idRol", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "nombre_rol", referencedColumnName = "nombre", nullable= false)
     private Rol rol;
 
-    @ManyToOne
-    @JoinColumn(name="codigoCM", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigo_cm", referencedColumnName = "codigo")
     private ComisionMedica CM;
 
-    public Empleado() {}
+    protected Empleado() {
+    }
 
     public Empleado(String nombre, String apellido, String email,  Usuario usuario, Rol rol, ComisionMedica CM) {
         this.nombre = nombre;
@@ -92,19 +99,21 @@ public class Empleado {
         this.CM = CM;
     }
 
+    // mismo caso aca, hay que ver como hacemos para que la comparación sea por objeto y no por código
     public Boolean esTuCM(ComisionMedica comisionMedica) {
         return CM != null
                 && comisionMedica != null
                 && Objects.equals(CM.getCodigo(), comisionMedica.getCodigo());
     }
 
+    // Hay que ver como se soluciona esto, porque si comparamos por objetos completos salta error
     public Boolean esTuUsuario(Usuario usuario) {
         return usuario != null
                 && this.usuario != null
-                && Objects.equals(this.usuario.getId(), usuario.getId());
+                && Objects.equals(this.usuario.getNombre(), usuario.getNombre());
     }
 
-    public Boolean sosGCM(Rol rol) {
+    public Boolean sosGCM() {
         return rol != null && rol.esGCM();
     }
 }

@@ -1,36 +1,36 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name="remitos")
+@Table(name = "remitos")
 public class Remito {
 
     @Id
-    @Column(name="idRemito" ,nullable = false, unique = true)
+    @Column(name = "numero", nullable = false)
     private Integer numero;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
-            @JoinColumn(
-                    name="nombreEstado",
-                    referencedColumnName = "nombre",
-                    nullable = false
-            ),
-            @JoinColumn(
-                    name="ambitoEstado",
-                    referencedColumnName = "ambito",
-                    nullable = false
-            )
+            @JoinColumn(name = "ambito_estado", referencedColumnName = "ambito", nullable = false),
+            @JoinColumn(name = "nombre_estado", referencedColumnName = "nombre", nullable = false)
     })
     private Estado estado;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechaCreacion;
 
-    public Remito() {}
+    protected Remito() {
+    }
 
     public Remito(Integer numero, Estado estado, LocalDate fechaCreacion) {
         this.numero = numero;

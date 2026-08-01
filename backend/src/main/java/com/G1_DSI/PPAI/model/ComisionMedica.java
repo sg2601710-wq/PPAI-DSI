@@ -6,26 +6,27 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="comisiones_medicas")
+@Table(name = "comisiones_medicas")
 public class ComisionMedica {
 
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(name = "codigo", nullable = false, length = 50)
     private String codigo;
 
-    @Column
+    @Column(name = "direccion", length = 200)
     private String direccion;
 
-    @Column
+    @Column(name = "email", length = 150)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column
+    @Column(name = "telefono", length = 50)
     private String telefono;
 
-    public ComisionMedica() {}
+    protected ComisionMedica() {
+    }
 
     public ComisionMedica(String codigo, String direccion, String email, String nombre, String telefono) {
         this.codigo = codigo;

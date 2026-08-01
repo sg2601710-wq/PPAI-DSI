@@ -1,112 +1,64 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name = "cambios_estados_bolsin")
-@IdClass(CambioEstadoBolsinId.class)
+@Table(name = "cambios_estados_bolsines")
 public class CambioEstadoBolsin {
 
+    // hay que ver si no vamos a hacer que esto sea una PK compuesta o si lo dejamos como PK
+    // simple y nos facilitamos la vida
     @Id
-    @Column(nullable = false)
-    private Integer numeroBolsin;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    @Id
-    @Column(nullable = false, length = 50)
-    private String nombreEstado;
-
-    @Id
-    @Column(nullable = false, length = 50)
-    private String ambitoEstado;
-
-    @Id
-    @Column(nullable = false)
+    @Column(name = "fecha_hora_inicio", nullable = false)
     private LocalDateTime fechaHoraInicio;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns({
-            @JoinColumn(
-                    name="nombreEstado",
-                    referencedColumnName = "nombre",
-                    nullable = false,
-                    insertable = false,
-                    updatable = false
-            ),
-            @JoinColumn(
-                    name="ambitoEstado",
-                    referencedColumnName = "ambito",
-                    nullable = false,
-                    insertable = false,
-                    updatable = false
-            )
+            @JoinColumn(name = "ambito_estado", referencedColumnName = "ambito", nullable = false),
+            @JoinColumn(name = "nombre_estado", referencedColumnName = "nombre", nullable = false)
     })
     private Estado estado;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-            @JoinColumn(
-                    name = "nombreResponsable",
-                    referencedColumnName = "nombre",
-                    nullable = false
-            ),
-            @JoinColumn(
-                    name = "apellidoResponsable",
-                    referencedColumnName = "apellido",
-                    nullable = false
-            )
-    })
+    @JoinColumn(name = "email_responsable", referencedColumnName = "email", nullable = false)
     private Empleado responsableCE;
 
-    @Column
+    @Column(name = "fecha_hora_fin")
     private LocalDateTime fechaHoraFin;
 
-    public CambioEstadoBolsin() {}
+    protected CambioEstadoBolsin() {
+    }
 
     public CambioEstadoBolsin(
-            Integer numeroBolsin,
-            String nombreEstado,
-            String ambitoEstado,
             Estado estado,
             Empleado responsableCE,
             LocalDateTime fechaHoraFin,
             LocalDateTime fechaHoraInicio
     ) {
-        this.numeroBolsin = numeroBolsin;
-        this.nombreEstado = nombreEstado;
-        this.ambitoEstado = ambitoEstado;
         this.estado = estado;
         this.responsableCE = responsableCE;
         this.fechaHoraFin = fechaHoraFin;
         this.fechaHoraInicio = fechaHoraInicio;
     }
 
-    public Integer getNumeroBolsin() {
-        return numeroBolsin;
+    public Long getId() {
+        return id;
     }
-
-    public void setNumeroBolsin(Integer numeroBolsin) {
-        this.numeroBolsin = numeroBolsin;
-    }
-
-    public String getNombreEstado() {
-        return nombreEstado;
-    }
-
-    public void setNombreEstado(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
-    }
-
-    public String getAmbitoEstado() {
-        return ambitoEstado;
-    }
-
-    public void setAmbitoEstado(String ambitoEstado) {
-        this.ambitoEstado = ambitoEstado;
-    }
-
 
     public Estado getEstado() {
         return estado;

@@ -5,20 +5,15 @@ import java.util.Objects;
 
 public class EstadoId implements Serializable {
 
-    private String nombre;
     private String ambito;
 
-    public EstadoId(){}
+    private String nombre;
 
-    public EstadoId(String nombre, String ambito) {
-        this.nombre = nombre;
+    public EstadoId() {
+    }
+
+    public EstadoId(String ambito, String nombre) {
         this.ambito = ambito;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
@@ -30,17 +25,29 @@ public class EstadoId implements Serializable {
         this.ambito = ambito;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EstadoId that = (EstadoId) o;
-        return Objects.equals(nombre, that.nombre) &&
-                Objects.equals(ambito, that.ambito);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        EstadoId estadoId = (EstadoId) o;
+        return Objects.equals(ambito, estadoId.ambito)
+                && Objects.equals(nombre, estadoId.nombre);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombre, ambito);
+        return Objects.hash(ambito, nombre);
     }
 }

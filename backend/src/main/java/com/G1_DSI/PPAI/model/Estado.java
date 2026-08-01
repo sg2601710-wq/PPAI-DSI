@@ -1,24 +1,29 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name="estados")
+@Table(name = "estados")
 @IdClass(EstadoId.class)
 public class Estado {
 
     @Id
-    @Column(nullable = false, length=50)
+    @Column(name = "ambito", nullable = false, length = 100)
     private String ambito;
 
     @Id
-    @Column(nullable = false, length=50)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column
+    @Column(name = "descripcion", length = 500)
     private String descripcion;
 
-    public Estado() {}
+    protected Estado() {
+    }
 
     public Estado(String ambito, String nombre, String descripcion) {
         this.ambito = ambito;
@@ -51,7 +56,7 @@ public class Estado {
     }
 
     public Boolean esEnviado() {
-        return nombre.toLowerCase().equals("enviado");
+        return "enviado".equalsIgnoreCase(nombre);
     }
 
 }

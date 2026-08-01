@@ -1,49 +1,56 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name="bolsines")
+@Table(name = "bolsines")
 public class Bolsin {
 
     @Id
-    @Column(nullable = false)
+    @Column(name = "numero_bolsin", nullable = false)
     private Integer numeroBolsin;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cmOrigen", referencedColumnName = "codigo", nullable = false)
+    @JoinColumn(name = "codigo_cm_origen", referencedColumnName = "codigo", nullable = false)
     private ComisionMedica cmOrigen;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name= "cmDestino", referencedColumnName = "codigo", nullable = false)
+    @JoinColumn(name = "codigo_cm_destino", referencedColumnName = "codigo")
     private ComisionMedica cmDestino;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="numeroBolsin", referencedColumnName = "numeroBolsin")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "numero_bolsin", referencedColumnName = "numero_bolsin", nullable = false)
     private List<CambioEstadoBolsin> cambioEstadoBolsin = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name="numeroBolsin", referencedColumnName = "numeroBolsin")
+    @OneToMany
+    @JoinColumn(name = "numero_bolsin", referencedColumnName = "numero_bolsin")
     private List<Remito> remito = new ArrayList<>();
 
-    @Column(nullable = false)
+    @Column(name = "numero_precinto")
     private Integer numeroPrecinto;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Column(precision = 10, scale = 2)
-    // Decido poner big decimal porque el peso tiene que ser preciso y no tener redondeo
+    @Column(name = "peso", precision = 10, scale = 2)
     private BigDecimal peso;
 
-    public Bolsin() {}
+    protected Bolsin() {
+    }
 
     public Bolsin(
             Integer numeroBolsin,
@@ -128,6 +135,8 @@ public class Bolsin {
         this.peso = peso;
     }
 
+    // hay que ver si hacemos que simplemente compare los objetos o si hacemos que compare
+    // con el código de la comisión para evitar errores
     public Boolean esTuCMOrigen(ComisionMedica comisionMedica) {
         return comisionMedica != null
                 && this.cmOrigen != null

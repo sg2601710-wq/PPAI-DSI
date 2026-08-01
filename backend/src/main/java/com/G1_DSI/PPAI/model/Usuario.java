@@ -6,32 +6,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name= "usuarios")
+@Table(name = "usuarios")
 public class Usuario {
-    @Id
-    @Column(nullable = false, unique = true)
-    private Integer id;
 
-    @Column
+    @Id
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-    @Column
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    public Usuario() {}
+    protected Usuario() {
+    }
 
-    public Usuario(Integer id, String nombre, String password) {
-        this.id = id;
+    public Usuario(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNombre() {

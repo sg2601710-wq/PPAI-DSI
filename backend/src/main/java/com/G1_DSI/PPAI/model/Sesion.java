@@ -1,43 +1,47 @@
 package com.G1_DSI.PPAI.model;
 
-import jakarta.persistence.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name="sesiones")
+@Table(name = "sesiones")
 public class Sesion {
 
     @Id
-    @Column(name = "idSesion", nullable = false, unique = true)
-    private Integer idSesion;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUsuario", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "nombre_usuario", referencedColumnName = "nombre", nullable = false)
     private Usuario usuario;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_hora_inicio", nullable = false)
     private LocalDateTime fechaHoraInicio;
 
-    @Column
+    @Column(name = "fecha_hora_fin")
     private LocalDateTime fechaHoraFin;
 
-    public Sesion() {}
+    protected Sesion() {
+    }
 
-    public Sesion(Integer idSesion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin,  Usuario usuario) {
-        this.idSesion = idSesion;
+    public Sesion(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin,  Usuario usuario) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.usuario = usuario;
     }
 
-    public Integer getIdSesion() {
-        return idSesion;
-    }
-
-    public void setIdSesion(Integer idSesion) {
-        this.idSesion = idSesion;
+    public Long getId() {
+        return id;
     }
 
     public Usuario getUsuario() {

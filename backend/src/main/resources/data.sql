@@ -1,6 +1,6 @@
-INSERT INTO usuarios (id, nombre, password) VALUES
-    (1, 'gcm.origen', '1234'),
-    (2, 'gcm.destino', '1234');
+INSERT INTO usuarios (nombre, password) VALUES
+    ('gcm.origen', '1234'),
+    ('gcm.destino', '1234');
 
 INSERT INTO roles (nombre, descripcion) VALUES
     ('GCM', 'Gestor de Comision Medica'),
@@ -19,9 +19,9 @@ INSERT INTO comisiones_medicas (codigo, direccion, email, nombre, telefono) VALU
     ('CM-MDQ-01', 'Av. Independencia 1800', 'mdq01@example.com', 'Comision Medica Mar del Plata', '2231000001'),
     ('CM-LPL-01', 'Calle 7 850', 'lpl01@example.com', 'Comision Medica La Plata', '2211000001');
 
-INSERT INTO empleados (nombre, apellido, email, id_usuario, id_rol, codigoCM) VALUES
-    ('Juan', 'Perez', 'juan.perez@example.com', 1, 'GCM', 'CM-CBA-01'),
-    ('Ana', 'Gomez', 'ana.gomez@example.com', 2, 'GCM', 'CM-ROS-02');
+INSERT INTO empleados (nombre, apellido, email, nombre_usuario, nombre_rol, codigo_cm) VALUES
+    ('Juan', 'Perez', 'juan.perez@example.com', 'gcm.origen', 'GCM', 'CM-CBA-01'),
+    ('Ana', 'Gomez', 'ana.gomez@example.com', 'gcm.destino', 'GCM', 'CM-ROS-02');
 
 INSERT INTO estados (ambito, nombre, descripcion) VALUES
     ('Bolsin', 'Creado', 'Bolsin creado'),
@@ -35,7 +35,7 @@ INSERT INTO estados (ambito, nombre, descripcion) VALUES
     ('Remito', 'RecibidoYAceptadoParcialmente', 'Remito recibido y aceptado de forma parcial'),
     ('Remito', 'Cancelado', 'Remito cancelado');
 
-INSERT INTO bolsines (numero_bolsin, cm_origen, cm_destino, numero_precinto, fecha_creacion, peso) VALUES
+INSERT INTO bolsines (numero_bolsin, codigo_cm_origen, codigo_cm_destino, numero_precinto, fecha_creacion, peso) VALUES
     (101, 'CM-CBA-01', 'CM-ROS-02', 5001, TIMESTAMP '2026-03-07 12:30:00', 12.50),
     (102, 'CM-ROS-02', 'CM-MDZ-03', 5002, TIMESTAMP '2026-03-07 12:32:15', 10.75),
     (103, 'CM-MDZ-03', 'CM-BA-01', 5003, TIMESTAMP '2026-03-07 12:35:04', 14.20),
@@ -47,38 +47,37 @@ INSERT INTO bolsines (numero_bolsin, cm_origen, cm_destino, numero_precinto, fec
     (109, 'CM-LPL-01', 'CM-CBA-01', 5009, TIMESTAMP '2026-03-07 12:49:27', 12.00),
     (110, 'CM-CBA-02', 'CM-ROS-02', 5010, TIMESTAMP '2026-03-07 12:52:09', 10.10);
 
-INSERT INTO cambios_estados_bolsin (
+INSERT INTO cambios_estados_bolsines (
     numero_bolsin,
     nombre_estado,
     ambito_estado,
     fecha_hora_inicio,
     fecha_hora_fin,
-    nombre_responsable,
-    apellido_responsable
+    email_responsable
 ) VALUES
-    (101, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:30:00', TIMESTAMP '2026-03-07 12:30:01', 'Juan', 'Perez'),
-    (101, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:30:01', NULL, 'Juan', 'Perez'),
-    (102, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:32:15', TIMESTAMP '2026-03-07 12:32:16', 'Juan', 'Perez'),
-    (102, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:32:16', NULL, 'Juan', 'Perez'),
-    (103, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:35:04', TIMESTAMP '2026-03-07 12:35:05', 'Juan', 'Perez'),
-    (103, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:35:05', NULL, 'Juan', 'Perez'),
-    (104, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:36:20', TIMESTAMP '2026-03-07 12:36:21', 'Juan', 'Perez'),
-    (104, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:36:21', NULL, 'Juan', 'Perez'),
-    (105, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:40:31', TIMESTAMP '2026-03-07 12:40:32', 'Juan', 'Perez'),
-    (105, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:40:32', NULL, 'Juan', 'Perez'),
-    (106, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:43:18', TIMESTAMP '2026-03-07 12:43:19', 'Juan', 'Perez'),
-    (106, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:43:19', NULL, 'Juan', 'Perez'),
-    (107, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:45:46', TIMESTAMP '2026-03-07 12:45:47', 'Juan', 'Perez'),
-    (107, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:45:47', NULL, 'Juan', 'Perez'),
-    (108, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:47:02', TIMESTAMP '2026-03-07 12:47:03', 'Juan', 'Perez'),
-    (108, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:47:03', NULL, 'Juan', 'Perez'),
-    (109, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:49:27', TIMESTAMP '2026-03-07 12:49:28', 'Juan', 'Perez'),
-    (109, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:49:28', NULL, 'Juan', 'Perez'),
-    (110, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:52:09', TIMESTAMP '2026-03-07 12:52:10', 'Juan', 'Perez'),
-    (110, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:52:10', NULL, 'Juan', 'Perez');
+    (101, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:30:00', TIMESTAMP '2026-03-07 12:30:01', 'juan.perez@example.com'),
+    (101, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:30:01', NULL, 'juan.perez@example.com'),
+    (102, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:32:15', TIMESTAMP '2026-03-07 12:32:16', 'juan.perez@example.com'),
+    (102, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:32:16', NULL, 'juan.perez@example.com'),
+    (103, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:35:04', TIMESTAMP '2026-03-07 12:35:05', 'juan.perez@example.com'),
+    (103, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:35:05', NULL, 'juan.perez@example.com'),
+    (104, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:36:20', TIMESTAMP '2026-03-07 12:36:21', 'juan.perez@example.com'),
+    (104, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:36:21', NULL, 'juan.perez@example.com'),
+    (105, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:40:31', TIMESTAMP '2026-03-07 12:40:32', 'juan.perez@example.com'),
+    (105, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:40:32', NULL, 'juan.perez@example.com'),
+    (106, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:43:18', TIMESTAMP '2026-03-07 12:43:19', 'juan.perez@example.com'),
+    (106, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:43:19', NULL, 'juan.perez@example.com'),
+    (107, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:45:46', TIMESTAMP '2026-03-07 12:45:47', 'juan.perez@example.com'),
+    (107, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:45:47', NULL, 'juan.perez@example.com'),
+    (108, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:47:02', TIMESTAMP '2026-03-07 12:47:03', 'juan.perez@example.com'),
+    (108, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:47:03', NULL, 'juan.perez@example.com'),
+    (109, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:49:27', TIMESTAMP '2026-03-07 12:49:28', 'juan.perez@example.com'),
+    (109, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:49:28', NULL, 'juan.perez@example.com'),
+    (110, 'Creado', 'Bolsin', TIMESTAMP '2026-03-07 12:52:09', TIMESTAMP '2026-03-07 12:52:10', 'juan.perez@example.com'),
+    (110, 'Enviado', 'Bolsin', TIMESTAMP '2026-03-07 12:52:10', NULL, 'juan.perez@example.com');
 
-INSERT INTO remitos (id_remito, fecha_creacion, nombre_estado, ambito_estado, numero_bolsin) VALUES
+INSERT INTO remitos (numero, fecha_creacion, nombre_estado, ambito_estado, numero_bolsin) VALUES
     (9001, DATE '2026-03-07', 'Creado', 'Remito', 101);
 
-INSERT INTO sesiones (id_sesion, id_usuario, fecha_hora_inicio, fecha_hora_fin) VALUES
-    (1, 1, TIMESTAMP '2026-07-09 08:30:00', NULL);
+INSERT INTO sesiones (id, nombre_usuario, fecha_hora_inicio, fecha_hora_fin) VALUES
+    (1, 'gcm.origen', TIMESTAMP '2026-07-09 08:30:00', NULL);

@@ -5,6 +5,7 @@ import com.G1_DSI.PPAI.dto.ConsultarUbicacionBolsinResponse;
 import com.G1_DSI.PPAI.dto.LocalizacionBolsinResponse;
 import com.G1_DSI.PPAI.dto.UbicacionBolsinRequest;
 import com.G1_DSI.PPAI.dto.UbicacionBolsinResponse;
+// Hay que cambiar esto de model.* para que solo usemos lo que necesitamos
 import com.G1_DSI.PPAI.model.*;
 import com.G1_DSI.PPAI.repository.IBolsinRepository;
 import com.G1_DSI.PPAI.repository.IEmpleadoRepository;
