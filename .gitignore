@@ -16,6 +16,8 @@ Thumbs.db
 .env.*
 !.env.example
 *.local
+.eslintcache
+coverage/
 
 # Node / frontend
 node_modules/
@@ -23,8 +25,11 @@ node_modules/
 dist/
 **/dist/
 dist-ssr/
+.vite/
+*.tsbuildinfo
 
 # Java / Maven
 target/
 **/target/
-**/.mvn/wrapper/maven-wrapper.jar
+out/
+*.class
